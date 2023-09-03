@@ -5,7 +5,7 @@ description: 'Load your EnvKey Secrets into your Github Actions workflow'
 
 inputs:
   envkey:
-    description: 'The ENVKEY value, typically  ${{ secrets.ENVKEY }}'
+    description: 'The ENVKEY value, typically secrets.ENVKEY'
     required: true
     
 runs:
