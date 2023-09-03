@@ -6,5 +6,5 @@ bash_lines = ['#!/usr/bin/env bash', '']
 for k, v in secrets.items():
   bash_lines.append(f"""echo '{k}="{v}"' >> $GITHUB_ENV""")
 
-with open('secrets.sh', 'w') as file:
+with open('/tmp/secrets.sh', 'w') as file:
   file.write('\n'.join(bash_lines))
