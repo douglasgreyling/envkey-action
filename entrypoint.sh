@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-python3 /envkey.py
+python3 /envkey-load.py
 
 bash /tmp/secrets.sh
