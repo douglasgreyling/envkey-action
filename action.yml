@@ -1,0 +1,19 @@
+# action.yml
+name: 'EnvKey Action'
+author: Fritz Larco
+description: 'Load your EnvKey Secrets into your Github Actions workflow'
+
+inputs:
+  envkey:
+    description: 'The ENVKEY value, typically  ${{ secrets.ENVKEY }}'
+    required: true
+    
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    ENVKEY: ${{ inputs.envkey }}
+
+branding:
+  color: black
+  icon: zap
