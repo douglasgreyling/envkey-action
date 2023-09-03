@@ -7,12 +7,16 @@ inputs:
   envkey:
     description: 'The ENVKEY value, typically secrets.ENVKEY'
     required: true
+  dotenv:
+    description: 'Create a .env file in the root folder. Accepts `true` or `false`'
+    required: false
     
 runs:
   using: 'docker'
   image: 'Dockerfile'
   env:
     ENVKEY: ${{ inputs.envkey }}
+    DOTENV: ${{ inputs.dotenv }}
 
 branding:
   color: black
