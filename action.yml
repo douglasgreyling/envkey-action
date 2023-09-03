@@ -1,5 +1,5 @@
 # action.yml
-name: 'EnvKey Action'
+name: 'EnvKey Loader'
 author: Fritz Larco
 description: 'Load your EnvKey Secrets into your Github Actions workflow'
 
