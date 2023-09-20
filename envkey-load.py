@@ -12,8 +12,9 @@ for k, v in secrets.items():
     for l in v.splitlines():
       bash_lines.append(f"""echo '::add-mask::{l}'""")
   else:
-    bash_lines.append(f"""echo '{k}={v}' >> $GITHUB_ENV""")
+      bash_lines.append(f"""echo '::add-mask::{v}'""")
   
+  bash_lines.append(f"""echo '{k}={v}' >> $GITHUB_ENV""")
   env_lines.append(f"""{k}='{v}'""")
 
 # replace re-used env vars
