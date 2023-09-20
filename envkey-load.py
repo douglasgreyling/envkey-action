@@ -3,6 +3,7 @@ import os, envkey
 secrets = envkey.fetch_env(os.getenv('ENVKEY'), cache_enabled=False)
 
 bash_lines = ['#!/usr/bin/env bash', '']
+mask_lines = ['#!/usr/bin/bash', '']
 env_lines = []
 for k, v in secrets.items():
   v = v.replace("'", """'"'"'""") # escape single quote
@@ -10,9 +11,9 @@ for k, v in secrets.items():
    # so the value is masked
   if '\n' in v:
     for l in v.splitlines():
-      bash_lines.append(f"""echo '::add-mask::{l}'""")
+      mask_lines.append(f"""echo '::add-mask::{l}'""")
   else:
-      bash_lines.append(f"""echo '::add-mask::{v}'""")
+      mask_lines.append(f"""echo '::add-mask::{v}'""")
   
   bash_lines.append(f"""echo '{k}={v}' >> $GITHUB_ENV""")
   env_lines.append(f"""{k}='{v}'""")
@@ -27,6 +28,9 @@ for k, val in secrets.items():
 
 with open('/tmp/secrets.sh', 'w') as file:
   file.write('\n'.join(bash_lines))
+
+with open('/tmp/masks.sh', 'w') as file:
+  file.write('\n'.join(mask_lines))
 
 if os.getenv('DOTENV') == 'true':
   with open('.env', 'w') as file:
