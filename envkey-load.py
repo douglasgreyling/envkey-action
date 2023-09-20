@@ -10,10 +10,15 @@ for k, val in secrets.items():
 
   # so the value is masked
   if '\n' in val:
-    bash_lines.append(f"""echo '{k}<<EEEE123123OOOO987987FFFFF'
+    cs = '{'
+    ce = '}'
+    bash_lines.append(f"""{cs}
+    echo '{k}<<EEEE123123OOOO987987FFFFF'
     {val}
     echo EEEE123123OOOO987987FFFFF
+    {ce} >> "$GITHUB_ENV"
     """)
+    
     for l in v.splitlines():
       mask_lines.append(f"""echo '::add-mask::{l.strip()}'""")
   else:
