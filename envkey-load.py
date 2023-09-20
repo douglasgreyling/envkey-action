@@ -26,6 +26,7 @@ for k, val in secrets.items():
   for i, _ in enumerate(env_lines):
     env_lines[i] = env_lines[i].replace(key, val)
 
+print('writing secrets.sh', flush=True)
 with open('/tmp/secrets.sh', 'w') as file:
   file.write('\n'.join(bash_lines))
 
@@ -33,5 +34,6 @@ with open('/tmp/masks.sh', 'w') as file:
   file.write('\n'.join(mask_lines))
 
 if os.getenv('DOTENV') == 'true':
+  print('writing .env', flush=True)
   with open('.env', 'w') as file:
     file.write('\n'.join(env_lines))
