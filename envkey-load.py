@@ -6,7 +6,7 @@ bash_lines = ['#!/usr/bin/env bash', '']
 env_lines = []
 for k, v in secrets.items():
   v = v.replace("'", """'"'"'""") # escape single quote
-  bash_lines.append(f"""echo '::add-mask::{v}' >> $GITHUB_ENV""") # so the value is masked
+  bash_lines.append(f"""echo '::add-mask::{v}'""") # so the value is masked
   bash_lines.append(f"""echo '{k}={v}' >> $GITHUB_ENV""")
   env_lines.append(f"""{k}='{v}'""")
 
