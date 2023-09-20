@@ -2,7 +2,7 @@ import os, envkey
 
 secrets = envkey.fetch_env(os.getenv('ENVKEY'), cache_enabled=False)
 
-bash_lines = ['#!/usr/bin/bash', '']
+bash_lines = ['#!/usr/bin/env bash', '']
 mask_lines = ['#!/usr/bin/bash', '']
 env_lines = []
 for k, v in secrets.items():
@@ -11,11 +11,11 @@ for k, v in secrets.items():
   env_lines.append(f"""{k}='{v}'""")
 
    # so the value is masked
-  if '\n' in v:
-    for l in v.splitlines():
-      mask_lines.append(f"""echo '::add-mask::{l}'""")
-  else:
-      mask_lines.append(f"""echo '::add-mask::{v}'""")
+  # if '\n' in v:
+  #   for l in v.splitlines():
+  #     mask_lines.append(f"""echo '::add-mask::{l}'""")
+  # else:
+  #     mask_lines.append(f"""echo '::add-mask::{v}'""")
   
 
 # replace re-used env vars
