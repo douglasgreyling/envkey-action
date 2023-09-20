@@ -2,6 +2,13 @@ import os, envkey
 
 secrets = envkey.fetch_env(os.getenv('ENVKEY'), cache_enabled=False)
 
+multiline_template = '''{
+echo '{k}<<EEEE123123OOOO987987FFFFF'
+{val}
+echo EEEE123123OOOO987987FFFFF
+} >> "$GITHUB_ENV"
+'''
+
 bash_lines = ['#!/usr/bin/env bash', '']
 mask_lines = ['#!/usr/bin/bash', '']
 env_lines = []
@@ -10,15 +17,7 @@ for k, val in secrets.items():
 
   # so the value is masked
   if '\n' in val:
-    cs = '{'
-    ce = '}'
-    bash_lines.append(f"""{cs}
-    echo '{k}<<EEEE123123OOOO987987FFFFF'
-    {val}
-    echo EEEE123123OOOO987987FFFFF
-    {ce} >> "$GITHUB_ENV"
-    """)
-    
+    bash_lines.append(multiline_template.replace('{k}', k).replace('{val}', val))
     for l in v.splitlines():
       mask_lines.append(f"""echo '::add-mask::{l.strip()}'""")
   else:
