@@ -7,6 +7,8 @@ mask_lines = ['#!/usr/bin/bash', '']
 env_lines = []
 for k, v in secrets.items():
   v = v.replace("'", """'"'"'""") # escape single quote
+  bash_lines.append(f"""echo '{k}={v}' >> $GITHUB_ENV""")
+  env_lines.append(f"""{k}='{v}'""")
 
    # so the value is masked
   if '\n' in v:
@@ -15,8 +17,6 @@ for k, v in secrets.items():
   else:
       mask_lines.append(f"""echo '::add-mask::{v}'""")
   
-  bash_lines.append(f"""echo '{k}={v}' >> $GITHUB_ENV""")
-  env_lines.append(f"""{k}='{v}'""")
 
 # replace re-used env vars
 for k, val in secrets.items():
