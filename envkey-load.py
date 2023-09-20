@@ -5,17 +5,21 @@ secrets = envkey.fetch_env(os.getenv('ENVKEY'), cache_enabled=False)
 bash_lines = ['#!/usr/bin/env bash', '']
 mask_lines = ['#!/usr/bin/bash', '']
 env_lines = []
-for k, v in secrets.items():
-  v = v.replace("'", """'"'"'""") # escape single quote
-  bash_lines.append(f"""echo '{k}={v}' >> $GITHUB_ENV""")
-  env_lines.append(f"""{k}='{v}'""")
+for k, val in secrets.items():
+  v = val.replace("'", """'"'"'""") # escape single quote
 
-   # so the value is masked
-  # if '\n' in v:
-  #   for l in v.splitlines():
-  #     mask_lines.append(f"""echo '::add-mask::{l}'""")
-  # else:
-  #     mask_lines.append(f"""echo '::add-mask::{v}'""")
+  # so the value is masked
+  if '\n' in val:
+    bash_lines.append(f"""echo '{k}<<EEEE123123OOOO987987FFFFF'
+    {val}
+    echo EEEE123123OOOO987987FFFFF
+    """)
+    for l in v.splitlines():
+      mask_lines.append(f"""echo '::add-mask::{l.strip()}'""")
+  else:
+    bash_lines.append(f"""echo '{k}={v}' >> $GITHUB_ENV""")
+    mask_lines.append(f"""echo '::add-mask::{v.strip()}'""")
+    env_lines.append(f"""{k}='{v}'""")
   
 
 # replace re-used env vars
