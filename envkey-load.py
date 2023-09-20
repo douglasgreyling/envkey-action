@@ -2,7 +2,7 @@ import os, envkey
 
 secrets = envkey.fetch_env(os.getenv('ENVKEY'), cache_enabled=False)
 
-bash_lines = ['#!/usr/bin/env bash', '']
+bash_lines = ['#!/usr/bin/bash', '']
 mask_lines = ['#!/usr/bin/bash', '']
 env_lines = []
 for k, v in secrets.items():
