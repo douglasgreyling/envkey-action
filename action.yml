@@ -10,6 +10,9 @@ inputs:
   dotenv:
     description: 'Create a .env file in the root folder. Accepts `true` or `false`'
     required: false
+  dotenv_sh:
+    description: 'Create a .env.sh file in the root folder. Accepts `true` or `false`'
+    required: false
     
 runs:
   using: 'docker'
@@ -17,6 +20,7 @@ runs:
   env:
     ENVKEY: ${{ inputs.envkey }}
     DOTENV: ${{ inputs.dotenv }}
+    DOTENV_SH: ${{ inputs.dotenv_sh }}
 
 branding:
   color: black

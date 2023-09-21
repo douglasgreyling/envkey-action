@@ -11,6 +11,7 @@ EEEE123123OOOO987987FFFFF' >> "$GITHUB_ENV"
 bash_lines = ['#!/usr/bin/env bash', '']
 mask_lines = ['#!/usr/bin/bash', '']
 env_lines = []
+env_sh_lines = []
 for k, val in secrets.items():
   v = val.replace("'", """'"'"'""") # escape single quote
 
@@ -23,6 +24,7 @@ for k, val in secrets.items():
     bash_lines.append(f"""echo '{k}={v}' >> $GITHUB_ENV""")
     mask_lines.append(f"""echo '::add-mask::{v.strip()}'""")
     env_lines.append(f"""{k}='{v}'""")
+    env_sh_lines.append(f"""export '{k}'='{v}'""")
   
 
 # replace re-used env vars
@@ -44,3 +46,8 @@ if os.getenv('DOTENV') == 'true':
   print('writing .env', flush=True)
   with open('.env', 'w') as file:
     file.write('\n'.join(env_lines))
+
+if os.getenv('DOTENV_SH') == 'true':
+  print('writing .env.sh', flush=True)
+  with open('.env.sh', 'w') as file:
+    file.write('\n'.join(env_sh_lines))
