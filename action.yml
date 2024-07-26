@@ -1,6 +1,6 @@
 # action.yml
-name: 'EnvKey Loader'
-author: Fritz Larco
+name: 'EnvKeyify'
+author: Douglas Greyling
 description: 'Load your EnvKey Secrets into your Github Actions workflow'
 
 inputs:
